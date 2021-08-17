@@ -6,15 +6,23 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <table id="book_table">
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Pages</th>
-            <th>Read?</th>
-            <th>Delete</th>
-        </tr>
-    </table>
+    <section class="form-section">
+        <form name="bookForm" onsubmit="return false">
+            <label for="title">Book title:</label>
+            <input type="text" id="title" name="title"><br><br>
+            <label for="author">Author name:</label>
+            <input type="text" id="author" name="author"><br><br>
+            <label for="pages">Pages of book: </label>
+            <input type="text" id="pages" name="pages"><br><br>
+            <label for="read">Have you read it?:</label>
+            <input type="checkbox" id="read" name="read"><br><br>
+            <button type="submit" id="add_button">Add Book</button>
+        </form>
+    </section>
+    <section class="card-container">
+        <div class="book-card">
+        </div>
+    </section>
     <script src="./app.js"></script>
 </body>
 </html>
