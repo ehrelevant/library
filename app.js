@@ -12,13 +12,14 @@ function addBookToLibrary(book) {
     myLibrary.push(book);
 }
 
-function displayLibrary() {
+const cardContainer = document.querySelector('#card_container');
+
+function updateDisplay() {
+    cardContainer.textContent = ''
     for (book of myLibrary) {
         createBookCard(book);
     }
 }
-
-const cardContainer = document.querySelector('#card_container');
 
 function createBookCard(book) {
     const newCard = document.createElement('div');
@@ -27,7 +28,7 @@ function createBookCard(book) {
     const title = document.createElement('h2');
     const author = document.createElement('p');
     const pages = document.createElement('p');
-    const readBtn = document.createElement('input');
+    const read = document.createElement('input');
     const deleteBtn = document.createElement('button');
 
 
@@ -35,8 +36,8 @@ function createBookCard(book) {
     author.textContent = `by ${book.author}`;
     pages.textContent = `${book.pages} pages`;
 
-    readBtn.type = 'checkbox';
-    readBtn.checked = book.read;
+    read.type = 'checkbox';
+    read.checked = book.read;
 
     deleteBtn.textContent = 'Delete';
 
@@ -44,10 +45,23 @@ function createBookCard(book) {
     newCard.appendChild(title);
     newCard.appendChild(author);
     newCard.appendChild(pages);
-    newCard.appendChild(readBtn);
+    newCard.appendChild(read);
     newCard.appendChild(deleteBtn);
 
     cardContainer.appendChild(newCard);
+}
+
+
+const bookForm = document.forms[0];
+bookForm.addEventListener('submit', addBook)
+
+function addBook() {
+    const title = bookForm['title'].value;
+    const author = bookForm['author'].value;
+    const pages = bookForm['pages'].value;
+    const read = bookForm['read'].value;
+    addBookToLibrary(new Book(title, author, pages, read));
+    updateDisplay();
 }
 
 
