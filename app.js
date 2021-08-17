@@ -13,22 +13,41 @@ function Book(title, author, pages, read) {
     };
 }
 
-const book1 = new Book('book1', 'author1', 212, false);
-const book2 = new Book('book2', 'author2', 107, false);
-const book3 = new Book('book3', 'author3', 54, true);
-
 
 function addBookToLibrary(book) {
     myLibrary.push(book);
 }
 
+function displayLibrary() {
+    for (book of myLibrary) {
+        addTableRow(book);
+    }
+}
+
+
+const book1 = new Book('book1', 'author1', 212, false);
+const book2 = new Book('book2', 'author2', 107, false);
+const book3 = new Book('book3', 'author3', 54, true);
+
 addBookToLibrary(book1);
 addBookToLibrary(book2);
 addBookToLibrary(book3);
 
+const tbody = document.querySelector('#book_table').querySelector('tbody');
 
-function displayLibrary() {
-    for (book of myLibrary) {
-        console.table(book);
-    }
+function addTableRow(book) {
+    const newBookRow = tbody.insertRow();
+
+    const bookProperties = Object.getOwnPropertyNames(book).filter(prop => (typeof(book[prop]) !== 'function'));
+
+    bookProperties.forEach((prop) => {
+        const newCell = newBookRow.insertCell();
+        newCell.textContent = book[prop];
+        newBookRow.appendChild(newCell);
+    });
+
+    const deleteRowCell = newBookRow.insertCell();
+    deleteRowCell.textContent = 'Delete?'
+    newBookRow.appendChild(deleteRowCell);
 }
+
