@@ -17,13 +17,14 @@ const cardContainer = document.querySelector('#card_container');
 function updateDisplay() {
     cardContainer.textContent = ''
     for (book of myLibrary) {
-        createBookCard(book);
+        createBookCard(book, myLibrary.indexOf(book));
     }
 }
 
-function createBookCard(book) {
+function createBookCard(book, ind) {
     const newCard = document.createElement('div');
     newCard.classList.add('card');
+    newCard.dataset.index = ind;
 
     const title = document.createElement('h2');
     const author = document.createElement('p');
@@ -40,6 +41,7 @@ function createBookCard(book) {
     read.checked = book.read;
 
     deleteBtn.textContent = 'Delete';
+    deleteBtn.addEventListener('click', deleteCard);
 
 
     newCard.appendChild(title);
@@ -68,12 +70,27 @@ function addBook() {
     updateDisplay();
 }
 
+
 const formContainer = document.querySelector('#form_container');
 const formBtn = document.querySelector('#form_button');
 formBtn.addEventListener('click', displayForm);
 
 function displayForm() {
     formContainer.classList.toggle('hidden')
+}
+
+
+function deleteCard(e) {
+    const parent = e.target.parentNode;
+
+    const bookIndex = parent.dataset.index;
+    removeFromLibrary(bookIndex);
+
+    parent.remove();
+}
+
+function removeFromLibrary(bookIndex) {
+    myLibrary.splice(bookIndex, 1);
 }
 
 
@@ -86,3 +103,5 @@ const book3 = new Book('book3', 'author3', 54, true);
 addBookToLibrary(book1);
 addBookToLibrary(book2);
 addBookToLibrary(book3);
+
+updateDisplay();
