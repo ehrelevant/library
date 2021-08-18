@@ -86,7 +86,7 @@ function deleteCard(e) {
     const bookIndex = parent.dataset.index;
     removeFromLibrary(bookIndex);
 
-    parent.remove();
+    updateDisplay();
 }
 
 function removeFromLibrary(bookIndex) {
