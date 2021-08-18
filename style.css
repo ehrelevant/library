@@ -8,11 +8,35 @@
     margin-bottom: 16px;
 }
 
+#form_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    background-color: #000000a0;
+    z-index: 1;
+}
+
+#book_form {
+    background-color: #fff;
+    padding: 20px 40px;
+    border-radius: 20px;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    z-index: 2;
+}
+
 #card_container {
     display: grid;
 
     padding: 16px;
-    border-top: 3px solid black;
 
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 8px;

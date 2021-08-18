@@ -67,15 +67,18 @@ function addBook() {
     const pages = bookForm['pages'].value;
     const read = bookForm['read'].value;
     addBookToLibrary(new Book(title, author, pages, read));
+
     updateDisplay();
+    toggleResetForm();
 }
 
 
 const formContainer = document.querySelector('#form_container');
 const formBtn = document.querySelector('#form_button');
-formBtn.addEventListener('click', displayForm);
+formBtn.addEventListener('click', toggleResetForm);
 
-function displayForm() {
+function toggleResetForm() {
+    bookForm.reset();
     formContainer.classList.toggle('hidden')
 }
 
@@ -103,6 +106,11 @@ function toggleRead(e) {
 
     updateDisplay();
 }
+
+
+const closeBtn = document.querySelector('#close_button');
+closeBtn.addEventListener('click', toggleResetForm)
+
 
 
 const book1 = new Book('book1', 'author1', 212, false);

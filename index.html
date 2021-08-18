@@ -8,7 +8,9 @@
 <body>
     <button id="form_button">NEW BOOK</button>
     <section id="form_container" class="form-section hidden">
-        <form name="bookForm" onsubmit="return false">
+        <form id="book_form" name="bookForm" onsubmit="return false">
+            <button id="close_button">X</button><br><br>
+
             <label for="title">Book title:</label>
             <input type="text" name="title" required><br><br>
             <label for="author">Author name:</label>
