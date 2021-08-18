@@ -29,7 +29,7 @@ function createBookCard(book, ind) {
     const title = document.createElement('h2');
     const author = document.createElement('p');
     const pages = document.createElement('p');
-    const read = document.createElement('input');
+    const readBtn = document.createElement('button');
     const deleteBtn = document.createElement('button');
 
 
@@ -37,8 +37,8 @@ function createBookCard(book, ind) {
     author.textContent = `by ${book.author}`;
     pages.textContent = `${book.pages} pages`;
 
-    read.type = 'checkbox';
-    read.checked = book.read;
+    readBtn.textContent = (book.read) ? 'Read' : 'Unread';
+    readBtn.addEventListener('click', toggleRead);
 
     deleteBtn.textContent = 'Delete';
     deleteBtn.addEventListener('click', deleteCard);
@@ -47,7 +47,7 @@ function createBookCard(book, ind) {
     newCard.appendChild(title);
     newCard.appendChild(author);
     newCard.appendChild(pages);
-    newCard.appendChild(read);
+    newCard.appendChild(readBtn);
     newCard.appendChild(deleteBtn);
 
     cardContainer.appendChild(newCard);
@@ -94,6 +94,15 @@ function removeFromLibrary(bookIndex) {
 }
 
 
+function toggleRead(e) {
+    const parent = e.target.parentNode;
+
+    const bookIndex = parent.dataset.index;
+    const book = myLibrary[bookIndex];
+    book.read = !book.read;
+
+    updateDisplay();
+}
 
 
 const book1 = new Book('book1', 'author1', 212, false);
