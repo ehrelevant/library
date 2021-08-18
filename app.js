@@ -52,6 +52,10 @@ function createBookCard(book) {
 }
 
 
+
+
+
+
 const bookForm = document.forms[0];
 bookForm.addEventListener('submit', addBook)
 
@@ -62,6 +66,14 @@ function addBook() {
     const read = bookForm['read'].value;
     addBookToLibrary(new Book(title, author, pages, read));
     updateDisplay();
+}
+
+const formContainer = document.querySelector('#form_container');
+const formBtn = document.querySelector('#form_button');
+formBtn.addEventListener('click', displayForm);
+
+function displayForm() {
+    formContainer.classList.toggle('hidden')
 }
 
 

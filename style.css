@@ -1,9 +1,12 @@
 
+.hidden {
+    display: none;
+}
+
 
 .form-section {
     margin-bottom: 16px;
 }
-
 
 #card_container {
     display: grid;
