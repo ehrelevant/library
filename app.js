@@ -1,15 +1,6 @@
 
 let myLibrary = [];
 
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-}
-
-
-
 const cardContainer = document.querySelector('#card_container');
 
 const bookForm = document.forms[0];
@@ -21,6 +12,15 @@ formBtn.addEventListener('click', toggleResetForm);
 
 const closeBtn = document.querySelector('#close_button');
 closeBtn.addEventListener('click', toggleResetForm);
+
+
+function Book(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+}
+
 
 
 function updateDisplay() {
@@ -166,6 +166,7 @@ function getSavedLibrary() {
     const libStr = localStorage.getItem('savedLibrary');
     myLibrary = JSON.parse(libStr);
 }
+
 
 
 setupStorage();
