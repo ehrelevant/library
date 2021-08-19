@@ -8,11 +8,20 @@ function Book(title, author, pages, read) {
     this.read = read;
 }
 
-function addBookToLibrary(book) {
-    myLibrary.push(book);
-}
+
 
 const cardContainer = document.querySelector('#card_container');
+
+const bookForm = document.forms[0];
+bookForm.addEventListener('submit', addBook);
+
+const formContainer = document.querySelector('#form_container');
+const formBtn = document.querySelector('#form_button');
+formBtn.addEventListener('click', toggleResetForm);
+
+const closeBtn = document.querySelector('#close_button');
+closeBtn.addEventListener('click', toggleResetForm);
+
 
 function updateDisplay() {
     cardContainer.textContent = ''
@@ -20,6 +29,19 @@ function updateDisplay() {
         createBookCard(book, myLibrary.indexOf(book));
     }
 }
+
+
+
+function addBookToLibrary(book) {
+    myLibrary.push(book);
+}
+
+
+function removeFromLibrary(bookIndex) {
+    myLibrary.splice(bookIndex, 1);
+}
+
+
 
 function createBookCard(book, ind) {
     const newCard = document.createElement('div');
@@ -54,36 +76,6 @@ function createBookCard(book, ind) {
 }
 
 
-
-
-
-
-const bookForm = document.forms[0];
-bookForm.addEventListener('submit', addBook)
-
-function addBook() {
-    const title = bookForm['title'].value;
-    const author = bookForm['author'].value;
-    const pages = bookForm['pages'].value;
-    const read = bookForm['read'].value;
-    addBookToLibrary(new Book(title, author, pages, read));
-
-    updateDisplay();
-    saveLibrary();
-    toggleResetForm();
-}
-
-
-const formContainer = document.querySelector('#form_container');
-const formBtn = document.querySelector('#form_button');
-formBtn.addEventListener('click', toggleResetForm);
-
-function toggleResetForm() {
-    bookForm.reset();
-    formContainer.classList.toggle('hidden')
-}
-
-
 function deleteCard(e) {
     const parent = e.target.parentNode;
 
@@ -94,8 +86,24 @@ function deleteCard(e) {
     saveLibrary();
 }
 
-function removeFromLibrary(bookIndex) {
-    myLibrary.splice(bookIndex, 1);
+
+
+function addBook() {
+    const title = bookForm['title'].value;
+    const author = bookForm['author'].value;
+    const pages = bookForm['pages'].value;
+    const read = bookForm['read'].checked;
+    addBookToLibrary(new Book(title, author, pages, read));
+
+    updateDisplay();
+    saveLibrary();
+    toggleResetForm();
+}
+
+
+function toggleResetForm() {
+    bookForm.reset();
+    formContainer.classList.toggle('hidden')
 }
 
 
@@ -111,8 +119,17 @@ function toggleRead(e) {
 }
 
 
-const closeBtn = document.querySelector('#close_button');
-closeBtn.addEventListener('click', toggleResetForm)
+
+function setupStorage() {
+    if (storageAvailable('localStorage')) {
+        if (!localStorage.length) {
+            saveLibrary();
+        } else {
+            getSavedLibrary();
+        }
+    }
+}
+
 
 function storageAvailable(type) {
     let storage;
@@ -140,22 +157,16 @@ function storageAvailable(type) {
 }
 
 
-if (storageAvailable('localStorage')) {
-    if (!localStorage.length){
-        saveLibrary();
-    } else {
-        getSavedLibrary();
-    }
-}
-
 function saveLibrary() {
     localStorage.setItem('savedLibrary', JSON.stringify(myLibrary));
-    console.log(localStorage.getItem('savedLibrary'));
 }
 
+
 function getSavedLibrary() {
-    const libStr = localStorage.getItem('savedLibrary')
+    const libStr = localStorage.getItem('savedLibrary');
     myLibrary = JSON.parse(libStr);
 }
 
+
+setupStorage();
 updateDisplay();
