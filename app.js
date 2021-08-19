@@ -69,6 +69,7 @@ function addBook() {
     addBookToLibrary(new Book(title, author, pages, read));
 
     updateDisplay();
+    saveLibrary();
     toggleResetForm();
 }
 
@@ -90,6 +91,7 @@ function deleteCard(e) {
     removeFromLibrary(bookIndex);
 
     updateDisplay();
+    saveLibrary();
 }
 
 function removeFromLibrary(bookIndex) {
@@ -105,20 +107,55 @@ function toggleRead(e) {
     book.read = !book.read;
 
     updateDisplay();
+    saveLibrary();
 }
 
 
 const closeBtn = document.querySelector('#close_button');
 closeBtn.addEventListener('click', toggleResetForm)
 
+function storageAvailable(type) {
+    let storage;
+    try {
+        storage = window[type];
+        let x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return e instanceof DOMException && (
+            // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            (storage && storage.length !== 0);
+    }
+}
 
 
-const book1 = new Book('book1', 'author1', 212, false);
-const book2 = new Book('book2', 'author2', 107, false);
-const book3 = new Book('book3', 'author3', 54, true);
+if (storageAvailable('localStorage')) {
+    if (!localStorage.length){
+        saveLibrary();
+    } else {
+        getSavedLibrary();
+    }
+}
 
-addBookToLibrary(book1);
-addBookToLibrary(book2);
-addBookToLibrary(book3);
+function saveLibrary() {
+    localStorage.setItem('savedLibrary', JSON.stringify(myLibrary));
+    console.log(localStorage.getItem('savedLibrary'));
+}
+
+function getSavedLibrary() {
+    const libStr = localStorage.getItem('savedLibrary')
+    myLibrary = JSON.parse(libStr);
+}
 
 updateDisplay();
