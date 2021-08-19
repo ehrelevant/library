@@ -54,7 +54,8 @@ button, #add_button {
 
 #book_form {
     background-color: #fff;
-    padding: 30px 30px 30px 30px;
+
+    padding: 42px 42px 30px 42px;
     border-radius: 20px;
 
     border-left: 3px solid #ccc;
@@ -88,8 +89,15 @@ button, #add_button {
 #close_button {
     height: 30px;
     width: 30px;
+    margin: 0;
+    padding: 0;
+
     font-weight: 600;
     font-size: 1.2em;
+
+    position: absolute;
+    top: 8px;
+    left: 8px;
 
     border: none;
     border-radius: 50%;
